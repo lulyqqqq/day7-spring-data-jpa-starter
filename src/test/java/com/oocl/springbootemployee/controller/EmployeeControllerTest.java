@@ -89,7 +89,7 @@ class EmployeeControllerTest {
 
         // When
         // Then
-        client.perform(MockMvcRequestBuilders.get("/employees/6"))
+        client.perform(MockMvcRequestBuilders.get("/employees/1"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(givenEmployee.getId()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(givenEmployee.getName()))
@@ -163,7 +163,7 @@ class EmployeeControllerTest {
     @Test
     void should_update_employee_success() throws Exception {
         // Given
-        Integer givenId = 27;
+        Integer givenId = 1;
         String givenName = "New Employee";
         Integer givenAge = 30;
         Gender givenGender = Gender.FEMALE;
@@ -191,7 +191,7 @@ class EmployeeControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.salary").value(givenSalary));
         List<Employee> employees = employeeRepository.findAll();
         assertThat(employees).hasSize(5);
-        assertThat(employees.get(0).getId()).isEqualTo(27);
+        assertThat(employees.get(0).getId()).isEqualTo(1);
         assertThat(employees.get(0).getName()).isEqualTo(givenName);
         assertThat(employees.get(0).getAge()).isEqualTo(givenAge);
         assertThat(employees.get(0).getGender()).isEqualTo(givenGender);
@@ -201,7 +201,7 @@ class EmployeeControllerTest {
     @Test
     void should_remove_employee_success() throws Exception {
         // Given
-        int givenId = 32;
+        int givenId = 1;
 
         // When
         // Then
@@ -209,10 +209,10 @@ class EmployeeControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isNoContent());
         List<Employee> employees = employeeRepository.findAll();
         assertThat(employees).hasSize(4);
-        assertThat(employees.get(0).getId()).isEqualTo(33);
-        assertThat(employees.get(1).getId()).isEqualTo(34);
-        assertThat(employees.get(2).getId()).isEqualTo(35);
-        assertThat(employees.get(3).getId()).isEqualTo(36);
+        assertThat(employees.get(0).getId()).isEqualTo(2);
+        assertThat(employees.get(1).getId()).isEqualTo(3);
+        assertThat(employees.get(2).getId()).isEqualTo(4);
+        assertThat(employees.get(3).getId()).isEqualTo(5);
     }
 
     @Test
