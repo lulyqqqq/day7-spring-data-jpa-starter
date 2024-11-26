@@ -19,6 +19,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.http.MediaType;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -40,6 +41,9 @@ class EmployeeControllerTest {
     @Autowired
     private JacksonTester<List<Employee>> employeesJacksonTester;
 
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
     @BeforeEach
     void setUp() {
         initEmployeeInMemoryRepository();
@@ -57,6 +61,7 @@ class EmployeeControllerTest {
 
     private void initEmployeeRepository() {
         employeeRepository.deleteAll();
+        jdbcTemplate.execute("ALTER TABLE employee ALTER COLUMN id RESTART with 1");
         employeeRepository.save(new Employee(null, "John Smith", 32, Gender.MALE, 5000.0));
         employeeRepository.save(new Employee(null, "Jane Johnson", 28, Gender.FEMALE, 6000.0));
         employeeRepository.save(new Employee(null, "David Williams", 35, Gender.MALE, 5500.0));
@@ -127,6 +132,7 @@ class EmployeeControllerTest {
     void should_create_employee_success() throws Exception {
         // Given
         employeeRepository.deleteAll();
+        jdbcTemplate.execute("ALTER TABLE employee ALTER COLUMN id RESTART with 1");
         String givenName = "New Employee";
         Integer givenAge = 18;
         Gender givenGender = Gender.FEMALE;
@@ -153,7 +159,7 @@ class EmployeeControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.salary").value(givenSalary));
         List<Employee> employees = employeeRepository.findAll();
         assertThat(employees).hasSize(1);
-        assertThat(employees.get(0).getId()).isEqualTo(26);
+        assertThat(employees.get(0).getId()).isEqualTo(1);
         assertThat(employees.get(0).getName()).isEqualTo(givenName);
         assertThat(employees.get(0).getAge()).isEqualTo(givenAge);
         assertThat(employees.get(0).getGender()).isEqualTo(givenGender);

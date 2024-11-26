@@ -21,8 +21,7 @@ public class CompanyService {
     }
 
     public List<Company> findAll(int pageIndex, int pageSize) {
-        List<Company> companiesInPage = companyRepository.findAll(PageRequest.of(pageIndex, pageSize)).getContent();
-        return companiesInPage.stream().toList();
+        return companyRepository.findAll(PageRequest.of(pageIndex, pageSize)).getContent();
     }
 
     public Company findById(Integer id) {
