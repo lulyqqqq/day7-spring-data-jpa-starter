@@ -57,8 +57,8 @@ class EmployeeServiceTest {
     @Test
     void should_return_the_created_employee_when_create_given_a_employee() {
         //given
-        Employee lucy = new Employee(1, "Lucy", 18, Gender.FEMALE, 8000.0);
-        when(mockedemployeeInMemoryRepository.create(any())).thenReturn(lucy);
+        Employee lucy = new Employee(null, "Lucy", 18, Gender.FEMALE, 8000.0);
+        when(mockemployeeRepository.save(any())).thenReturn(lucy);
         EmployeeService employeeService = mockEmployeeService;
 
         //when
@@ -71,12 +71,12 @@ class EmployeeServiceTest {
     @Test
     void should_throw_EmployeeAgeNotValidException_when_create_given_a_employee_with_age_17() {
         //given
-        Employee kitty = new Employee(1, "Kitty", 6, Gender.FEMALE, 8000.0);
+        Employee kitty = new Employee(null, "Kitty", 6, Gender.FEMALE, 8000.0);
         EmployeeService employeeService = mockEmployeeService;
         //when
         //then
         assertThrows(EmployeeAgeNotValidException.class, () -> employeeService.create(kitty));
-        verify(mockedemployeeInMemoryRepository, never()).create(any());
+        verify(mockemployeeRepository, never()).save(any());
     }
 
     @Test
@@ -87,7 +87,7 @@ class EmployeeServiceTest {
         //when
         //then
         assertThrows(EmployeeAgeNotValidException.class, () -> employeeService.create(kitty));
-        verify(mockedemployeeInMemoryRepository, never()).create(any());
+        verify(mockemployeeRepository, never()).save(any());
     }
 
     @Test
@@ -98,7 +98,7 @@ class EmployeeServiceTest {
         //when
         employeeService.create(lucy);
         /* then */
-        verify(mockedemployeeInMemoryRepository).create(argThat(Employee::getActive));
+        verify(mockemployeeRepository).save(argThat(Employee::getActive));
     }
 
     @Test
@@ -109,7 +109,7 @@ class EmployeeServiceTest {
         //when
         //then
         assertThrows(EmployeeAgeSalaryNotMatchedException.class, () -> employeeService.create(bob));
-        verify(mockedemployeeInMemoryRepository, never()).create(any());
+        verify(mockemployeeRepository, never()).save(any());
     }
 
     @Test
@@ -117,11 +117,11 @@ class EmployeeServiceTest {
         //given
         Employee inactiveEmployee = new Employee(1, "Bob", 31, Gender.FEMALE, 8000.0);
         inactiveEmployee.setActive(false);
-        when(mockedemployeeInMemoryRepository.findById(1)).thenReturn(inactiveEmployee);
+        when(mockemployeeRepository.findById(1)).thenReturn(java.util.Optional.of(inactiveEmployee));
         EmployeeService employeeService = mockEmployeeService;
         //when
         //then
         assertThrows(EmployeeInactiveException.class, () -> employeeService.update(1, inactiveEmployee));
-        verify(mockedemployeeInMemoryRepository, never()).create(any());
+        verify(mockemployeeRepository, never()).save(any());
     }
 }
