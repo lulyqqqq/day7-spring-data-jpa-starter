@@ -1,0 +1,16 @@
+O:
+今天的学习目标是深入理解SpringBoot中的注解使用,掌握SQL语句和JPA框架的基本操作,并学会如何对Spring Boot项目中的Service和Controller层进行单元测试,使用Mock工具构造虚拟数据完成测试任务
+
+I:
+complex
+R:
+通过学习,我熟悉了Spring Boot中常用注解的作用及其使用场景,例如@RestController、@Service、@Repository等
+SQL和JPA的结合让我认识到如何通过面向对象的方式高效操作数据库
+在单元测试实践中,借助Mock工具,我能够模拟依赖关系,专注于目标逻辑的测试,同时减少对外部环境的依赖
+
+
+D:
+深入学习Spring Boot注解的高级用法,例如自定义注解和元注解
+在实践中进一步优化JPA查询,尝试更多动态查询和Criteria API
+加强对单元测试的理解,探索集成测试与单元测试的区别与联系
+熟练使用Mock工具,模拟更复杂的依赖和数据交互场景,提高测试覆盖率和可靠性
